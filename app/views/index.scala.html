@@ -1,0 +1,129 @@
+
+@(userForm: Form[UserFormData],
+            salary: java.math.BigDecimal,
+            monthlySalary: java.math.BigDecimal,
+            weeklySalary: java.math.BigDecimal,
+            incomeTax: java.math.BigDecimal,
+            monthlyIncomeTax: java.math.BigDecimal,
+            weeklyIncomeTax: java.math.BigDecimal,
+            ni: java.math.BigDecimal,
+            monthlyNI: java.math.BigDecimal,
+            weeklyNI: java.math.BigDecimal,
+            studentLoan: java.math.BigDecimal,
+            monthlyStudentLoan: java.math.BigDecimal,
+            weeklyStudentLoan: java.math.BigDecimal,
+            takeHome: java.math.BigDecimal,
+            monthlyTakeHome: java.math.BigDecimal,
+            weeklyTakeHome: java.math.BigDecimal)
+
+@import helper._
+@import helper.twitterBootstrap._
+
+@main("Tax Man") {
+
+   @helper.form(action = routes.Taxes.submit) {
+
+        <div id="headwrapper">
+            <div id="header">
+                <!-- title banner goes here -->
+                <h1><strong>i<span>TAXMAN</span></strong></h1>
+            </div>
+        </div>
+
+
+        <div id="wrapper">
+
+            <div id="content">
+                <!-- results go here -->
+                <div id="tablewrapper">
+                <table>
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Per Year</th>
+                        <th>Per Month</th>
+                        <th>Per Week</th>
+                    </tr>
+                    </thead>
+
+
+                    <tr>
+                        <td>Salary: </td>
+                        <td id="value">&pound;@salary</td>
+                        <td id="value">&pound;@monthlySalary</td>
+                        <td id="value">&pound;@weeklySalary</td>
+                    </tr>
+                    <tr>
+                        <td>Income Tax: </td>
+                        <td id="value">&pound;@incomeTax</td>
+                        <td id="value">&pound;@monthlyIncomeTax</td>
+                        <td id="value">&pound;@weeklyIncomeTax</td>
+                    </tr>
+                    <tr>
+                        <td>National Insurance: </td>
+                        <td id="value">&pound;@ni</td>
+                        <td id="value">&pound;@monthlyNI</td>
+                        <td id="value">&pound;@weeklyNI</td>
+                    </tr>
+                    <tr>
+                        <td>Student Loan Repayments: </td>
+                        <td id="value">&pound;@studentLoan</td>
+                        <td id="value">&pound;@monthlyStudentLoan</td>
+                        <td id="value">&pound;@weeklyStudentLoan</td>
+                    </tr>
+                    <tr>
+                        <td><b>Take Home Pay:</b></td>
+                        <td>&pound;@takeHome</td>
+                        <td>&pound;@monthlyTakeHome</td>
+                        <td>&pound;@weeklyTakeHome</td>
+                    </tr>
+                </table>
+                </div>
+            </div>
+
+            <div id = "panel">
+                <fieldset>
+                    <legend>User Information</legend>
+
+                    @select(
+                    userForm("fiscalYear"),
+                    options = options(FiscalYear_.FYs),
+                    '_default -> "Please choose...",
+                    '_label -> "Fiscal Year",
+                    '_error -> userForm("fiscalYear").error.map(_.withMessage("Please select fiscal year"))
+                    )
+
+                    @inputText(
+                    userForm("salary"),
+                    '_label -> "Annual Salary",
+                    '_help -> "Enter total annual earnings before tax",
+                    '_error -> userForm.globalError,
+                    'autofocus -> "autofocus"
+                    )
+
+                    @checkbox(
+                    userForm("studentLoan"),
+                    '_label -> "Student Loan?",
+                    '_help -> "Check box if you are repaying a student loan in England or Wales for a course beginning on or after 1st September 2012"
+                    )
+
+                </fieldset>
+
+                <div class="actions">
+                <input type="submit" class="btn primary" value="GO" id="button">
+                </div>
+            </div>
+        </div>
+
+        <div id="footwrapper">
+            <div id="footwrapper2">
+                <div id="footer">
+                    <p>iTAXMAN &copy; <script type=" text/javascript">
+                        var year = new Date();
+                        document.write(year.getFullYear());
+                    </script></p>
+                </div>
+            </div>
+        </div>
+    }
+}

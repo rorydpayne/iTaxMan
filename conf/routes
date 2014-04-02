@@ -1,0 +1,17 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                           controllers.Application.index()
+
+# Taxes
+GET		/user						controllers.Taxes.blank()
+POST	/user 						controllers.Taxes.submit()
+
+# # other parameters
+# GET 	/rates						controllers.Rates.rates()
+# GET	/rounder					controllers.Rounder.rounder()
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
